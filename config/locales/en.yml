@@ -1,0 +1,36 @@
+en:
+  dashboard:
+   title: "Dashboard"
+  users:
+   title: "Users"
+   email: "Email"
+   password: "Password"
+   remember_me: "Remember me"
+   session: "Sign In"
+   logout: "Logout"
+   new: "New User"
+  works:
+   title: "Works"
+   new: "New Work"
+  suppliers:
+   title: "Suppliers"
+   new: "New Supplier"
+  agents:
+   title: "Agents"
+   new: "New Agent"
+  customers:
+   title: "Customers"
+   new: "New Customer"
+  actions:
+   title: "Actions"
+   save: "Save"
+   edit: "Edit"
+   back: "Back"
+  fields:
+   id: "Id"
+   name: "Name"
+   password: "Password"
+   email: "Email"
+   role: "Role"
+   address: "Address"
+   description: "Description"

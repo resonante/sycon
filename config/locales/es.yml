@@ -1,0 +1,36 @@
+es:
+  dashboard:
+   title: "Escritorio"
+  users:
+   title: "Usuarios"
+   email: "Correo Electrónico"
+   password: "Contraseña"
+   remember_me: "Recordarme"
+   session: "Iniciar Sesión"
+   logout: "Cerrar Sesión"
+   new: "Nuevo Usuario"
+  works:
+   title: "Obras"
+   new: "Nueva Obra"
+  suppliers:
+   title: "Proveedores"
+   new: "Nuevo Proveedor"
+  agents:
+   title: "Representates"
+   new: "Nuevo Representante"
+  customers:
+   title: "Clientes"
+   new: "Nuevo Cliente"
+  actions:
+   title: "Acciones"
+   save: "Guardar"
+   edit: "Editar"
+   back: "Volver"
+  fields:
+   id: "Id"
+   name: "Nombre"
+   password: "Contraseña"
+   email: "Correo Electrónico"
+   role: "Rol"
+   address: "Dirección"
+   description: "Descripción"

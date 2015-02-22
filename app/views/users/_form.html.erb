@@ -1,0 +1,35 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label t('fields.email') %><br>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label t('fields.password') %><br>
+    <%= f.text_field :password, class: 'form-control' %>
+  </div> 
+  <div class="form-group form-inline">
+    <%= label :user, t('fields.role'), :class => 'form-label' %><br>
+    <% @roles.each do |role| %>
+      <div class="checkbox">
+        <label class='form-label'>
+          <input type="checkbox" name="roles[]" value="<%= role.id %>" <% if @user.roles.include?(role) %>checked="checked"<% end %>> <%= role.name %>
+        </label>
+      </div>
+    <% end %>
+  </div>    
+  <div class="form-group">
+    <%= f.submit t('actions.save'), :class => 'btn btn-primary' %>
+  </div>
+<% end %>
