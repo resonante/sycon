@@ -9,23 +9,29 @@ es:
    session: "Iniciar Sesión"
    logout: "Cerrar Sesión"
    new: "Nuevo Usuario"
+   edit: "Editar Usuario"
   works:
    title: "Obras"
    new: "Nueva Obra"
+   edit: "Editar Obra"
   suppliers:
    title: "Proveedores"
    new: "Nuevo Proveedor"
+   edit: "Editar Proveedor"
   agents:
    title: "Representates"
    new: "Nuevo Representante"
+   edit: "Editar Representante"
   customers:
    title: "Clientes"
    new: "Nuevo Cliente"
+   edit: "Editar Cliente"
   actions:
    title: "Acciones"
    save: "Guardar"
    edit: "Editar"
    back: "Volver"
+   show: "Ver"
   fields:
    id: "Id"
    name: "Nombre"

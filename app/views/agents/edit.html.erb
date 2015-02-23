@@ -1,6 +1,6 @@
-<h1>Editing Agent</h1>
+<h1 class="page-header"><%= t('agents.edit') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @agent %> |
-<%= link_to 'Back', agents_path %>
+<%= link_to t('actions.show'), @agent %> |
+<%= link_to t('actions.back'), agents_path %>

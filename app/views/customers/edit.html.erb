@@ -1,6 +1,6 @@
-<h1>Editing Customer</h1>
+<h1 class="page-header"><%= t('customers.edit') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @customer %> |
-<%= link_to 'Back', customers_path %>
+<%= link_to t('actions.show'), @customer %> |
+<%= link_to t('actions.back'), customers_path %>
