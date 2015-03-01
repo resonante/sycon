@@ -11,15 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222034939) do
+ActiveRecord::Schema.define(version: 20150227052005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
-    t.integer  "costumer_id"
+    t.integer  "customer_id"
     t.string   "name"
     t.string   "email"
+    t.text     "address"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "state"
+    t.string   "town"
+    t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -32,9 +38,40 @@ ActiveRecord::Schema.define(version: 20150222034939) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.integer  "work_id"
     t.string   "name"
     t.string   "email"
+    t.text     "address"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "state"
+    t.string   "town"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "payment_orders", force: :cascade do |t|
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "purchase_order_items", force: :cascade do |t|
+    t.integer  "purchase_order_id"
+    t.integer  "item"
+    t.text     "description"
+    t.string   "unit"
+    t.decimal  "quantity"
+    t.decimal  "price"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "purchase_orders", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "supplier_id"
+    t.integer  "work_id"
+    t.string   "reference"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -51,6 +88,10 @@ ActiveRecord::Schema.define(version: 20150222034939) do
     t.string   "name"
     t.string   "email"
     t.text     "address"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "state"
+    t.string   "town"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -74,9 +115,25 @@ ActiveRecord::Schema.define(version: 20150222034939) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "works", force: :cascade do |t|
-    t.string   "name"
+  create_table "valuations", force: :cascade do |t|
     t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "work_assignments", force: :cascade do |t|
+    t.integer  "work_id"
+    t.integer  "agent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.string   "name"
+    t.string   "address"
+    t.text     "description"
+    t.datetime "date"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

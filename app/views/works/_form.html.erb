@@ -16,13 +16,33 @@
       <% end %>
 
       <div class="form-group">
+        <%= f.label t('customers.title').singularize %><br>
+        <%= f.select(:customer_id, {}, {}, { class: 'form-control' }) do %>
+          <% @customers.each do |u| -%>
+            <% if u.id == @work.customer_id -%>
+              <%= content_tag(:option, u.name, value: u.id, selected: 'selected') %>
+            <% else -%>
+              <%= content_tag(:option, u.name, value: u.id) %>
+            <% end -%>
+          <% end %>
+        <% end if !@customers.empty? %>
+      </div> 
+      <div class="form-group">
         <%= f.label t('fields.name') %><br>
         <%= f.text_field :name, class: 'form-control' %>
+      </div>          
+      <div class="form-group">
+        <%= f.label t('fields.address') %><br>
+        <%= f.text_area :address, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('fields.date') %><br>
+        <%= f.text_field :date, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label t('fields.description') %><br>
-        <%= f.text_area :description, class: 'form-control' %>
-      </div>  
+        <%= f.text_field :description, class: 'form-control' %>
+      </div>              
       <div class="form-group">
         <%= f.submit t('actions.save'), :class => 'btn btn-primary' %>
       </div>

@@ -17,6 +17,11 @@
     <!-- Custom styles for this template -->
     <link href="/assets/application.css" rel="stylesheet">
 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>    
+
   </head>
 
   <body>
@@ -46,14 +51,17 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li <% if controller_name == 'welcome' %>class="active"<% end %>><a href="/"><%= t('dashboard.title') %></a></li>
+            <li <% if controller_name == 'customers' %>class="active"<% end %>><a href="/customers"><%= t('customers.title') %></a></li>            
             <li <% if controller_name == 'works' %>class="active"<% end %>><a href="/works"><%= t('works.title') %></a></li>
             <li <% if controller_name == 'suppliers' %>class="active"<% end %>><a href="/suppliers"><%= t('suppliers.title') %></a></li>
-            <li <% if controller_name == 'customers' %>class="active"<% end %>><a href="/customers"><%= t('customers.title') %></a></li>
-            <li <% if controller_name == 'agents' %>class="active"<% end %>><a href="/agents"><%= t('agents.title') %></a></li>            
+            <li <% if controller_name == 'agents' %>class="active"<% end %>><a href="/agents"><%= t('agents.title') %></a></li> 
+            <li <% if controller_name == 'purchase_orders' %>class="active"<% end %>><a href="/purchase_orders"><%= t('purchase_orders.title') %></a></li>
+            <li <% if controller_name == 'valuations' %>class="active"<% end %>><a href="/valuations"><%= t('valuations.title') %></a></li>
+            <li <% if controller_name == 'payment_orders' %>class="active"<% end %>><a href="/payment_orders"><%= t('payment_orders.title') %></a></li>                                                
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="/users"><%= t('users.title') %></a></li>
-            <li><a href="#"><%= t('.settings') %></a></li>
+            <li><a href="#"><%= t('actions.settings') %></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -62,10 +70,6 @@
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/assets/bootstrap.min.js"></script>
     <script src="/assets/bootstrap-table.min.js"></script>
     <script src="/assets/bootstrap-table-es-CR.min.js"></script>    

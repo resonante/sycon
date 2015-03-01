@@ -1,0 +1,31 @@
+
+<div class="row">
+  <div class="col-xs-10 col-md-6">
+
+    <%= form_for(@payment_order) do |f| %>
+      <% if @payment_order.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@payment_order.errors.count, "error") %> prohibited this payment_order from being saved:</h2>
+
+          <ul>
+          <% @payment_order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+        
+      <div class="form-group">
+        <%= f.label t('fields.description') %><br>
+        <%= f.text_area :description, class: 'form-control' %>
+      </div>               
+      <div class="form-group">
+        <%= f.submit t('actions.save'), :class => 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+  </div>
+  
+  <div class="col-xs-8 col-md-6"></div>
+
+</div>

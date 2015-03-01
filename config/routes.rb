@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :purchase_order_items
+
+  resources :payment_orders
+
+  resources :valuations
+
+  resources :purchase_orders
+
   resources :roles
 
   resources :suppliers

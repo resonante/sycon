@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.all.includes(:roles)
   end
 
   # GET /users/1
@@ -44,6 +44,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    @user.roles.delete_all
     @roles = Role.all
     @user.roles << Role.find(params[:roles])
     respond_to do |format|

@@ -1,3 +1,5 @@
 class Agent < ActiveRecord::Base
-	belongs_to :costumer
+	has_many :work_assignments, dependent: :destroy
+	has_many :works, :through => :work_assignments
+	belongs_to :customer
 end

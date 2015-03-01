@@ -15,17 +15,22 @@ class AgentsController < ApplicationController
   # GET /agents/new
   def new
     @agent = Agent.new
+    @works = Work.all
+    @customers = Customer.all
   end
 
   # GET /agents/1/edit
   def edit
+    @customers = Customer.all
+    @works = Work.all
   end
 
   # POST /agents
   # POST /agents.json
   def create
     @agent = Agent.new(agent_params)
-
+    @agent.works << Work.find(params[:works])
+    @works = Work.all
     respond_to do |format|
       if @agent.save
         format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
@@ -40,6 +45,9 @@ class AgentsController < ApplicationController
   # PATCH/PUT /agents/1
   # PATCH/PUT /agents/1.json
   def update
+    @agent.works.delete_all
+    @agent.works << Work.find(params[:works])
+    @works = Work.all    
     respond_to do |format|
       if @agent.update(agent_params)
         format.html { redirect_to @agent, notice: 'Agent was successfully updated.' }
@@ -69,6 +77,6 @@ class AgentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def agent_params
-      params.require(:agent).permit(:name, :email, :description)
+      params.require(:agent).permit(:name, :email, :address, :phone, :mobile, :state, :town, :description)
     end
 end

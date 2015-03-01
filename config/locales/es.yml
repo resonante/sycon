@@ -26,12 +26,26 @@ es:
    title: "Clientes"
    new: "Nuevo Cliente"
    edit: "Editar Cliente"
+  purchase_orders:
+   title: "Ordenes de Compra"
+   new: "Nueva Orden de Compra"
+   edit: "Editar Orden de Compra"
+  payment_orders:
+   title: "Ordenes de Pago"
+   new: "Nueva Orden de Pago"
+   edit: "Editar Orden de Pago"
+  valuations: 
+   title: "Valuaciones"
+   new: "Nueva Valuación"
+   edit: "Editar Valuación"
   actions:
    title: "Acciones"
    save: "Guardar"
    edit: "Editar"
    back: "Volver"
    show: "Ver"
+   add_item: "Nuevo Item"
+   settings: "Configuraciones"
   fields:
    id: "Id"
    name: "Nombre"
@@ -39,4 +53,10 @@ es:
    email: "Correo Electrónico"
    role: "Rol"
    address: "Dirección"
+   phone: "Teléfono"
+   mobile: "Teléfono Móvil"
+   state: "Estado"
+   town: "Municipio"
+   date: "Fecha"
    description: "Descripción"
+   order_number: "Número de Orden"

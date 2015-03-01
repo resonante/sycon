@@ -1,25 +1,93 @@
-<%= form_for(@agent) do |f| %>
-  <% if @agent.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@agent.errors.count, "error") %> prohibited this agent from being saved:</h2>
+<div class="row">
+  <div class="col-xs-10 col-md-6">
 
-      <ul>
-      <% @agent.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+    <%= form_for(@agent) do |f| %>
+      <% if @agent.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@agent.errors.count, "error") %> prohibited this agent from being saved:</h2>
+
+          <ul>
+          <% @agent.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
+      <div class="form-group">
+        <%= f.label t('fields.name') %><br>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('fields.email') %><br>
+        <%= f.text_field :email, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('fields.address') %><br>
+        <%= f.text_area :address, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('fields.phone') %><br>
+        <%= f.text_field :phone, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label t('fields.mobile') %><br>
+        <%= f.text_field :mobile, class: 'form-control' %>
+      </div> 
+      <div class="form-group">
+        <%= f.label t('fields.state') %><br>
+        <%= f.text_field :state, class: 'form-control' %>
+      </div> 
+      <div class="form-group">
+        <%= f.label t('fields.town') %><br>
+        <%= f.text_field :town, class: 'form-control' %>
+      </div> 
   <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= f.label t('fields.description') %><br>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>                 
+      <div class="form-group">
+        <%= f.submit t('actions.save'), :class => 'btn btn-primary' %>
+      </div>
+    
+
   </div>
-  <div class="form-group">
-    <%= f.label :email %><br>
-    <%= f.text_field :email, class: 'form-control' %>
-  </div>  
-  <div class="form-group">
-    <%= f.submit t('actions.save'), :class => 'btn btn-primary' %>
+  
+  <div class="col-xs-8 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
+      </div>
+      <div class="panel-body">
+          <div class="form-group">
+            <%= f.label t('customers.title').singularize %><br>
+            <%= f.select(:customer_id, {}, {}, { class: 'form-control' }) do %>
+              <% @customers.each do |u| -%>
+                <% if u.id == @agent.customer_id -%>
+                  <%= content_tag(:option, u.name, value: u.id, selected: 'selected') %>
+                <% else -%>
+                  <%= content_tag(:option, u.name, value: u.id) %>
+                <% end -%>
+              <% end %>
+            <% end if !@customers.empty? %>
+          </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('works.title') %></h3>
+      </div>
+      <div class="panel-body">
+    <%= label :user, t('fields.role'), :class => 'form-label' %><br>
+    <% @works.each do |work| %>
+      <div class="checkbox">
+        <label class='form-label'>
+          <input type="checkbox" name="works[]" value="<%= work.id %>" <% if @agent.works.include?(work) %>checked="checked"<% end %>> <%= work.name %>
+        </label>
+      </div>
+    <% end %>
+      </div>
+    </div>    
   </div>
-<% end %>
+  <% end %>
+</div>
