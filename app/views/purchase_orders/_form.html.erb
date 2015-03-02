@@ -19,7 +19,7 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-          <%= f.label t('customers.title').singularize %><br>
+          <%= f.label t('fields.customer_select').singularize %><br>
           <%= f.select(:customer_id, {}, {}, { class: 'form-control' }) do %>
             <% @customers.each do |u| -%>
               <% if u.id == @purchase_order.customer_id -%>
@@ -35,11 +35,11 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><%= t('suppliers.title').singularize %></h3>
+      <h3 class="panel-title"><%= t('suppliers.title').singularize.chop %></h3>
     </div>
     <div class="panel-body">
         <div class="form-group">
-          <%= f.label t('suppliers.title').singularize %><br>
+          <%= f.label t('fields.supplier_select').singularize %><br>
           <%= f.select(:supplier_id, {}, {}, { class: 'form-control' }) do %>
             <% @suppliers.each do |u| -%>
               <% if u.id == @purchase_order.supplier_id -%>
@@ -59,7 +59,7 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-          <%= f.label t('works.title').singularize %><br>
+          <%= f.label t('fields.work_select').singularize %><br>
           <%= f.select(:work_id, {}, {}, { class: 'form-control' }) do %>
             <% @works.each do |u| -%>
               <% if u.id == @purchase_order.work_id -%>
@@ -70,6 +70,26 @@
             <% end %>
           <% end if !@works.empty? %>
         </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('fields.date') %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group form-inline">
+        <%= f.label t('fields.issue_date') %><br>
+        <%= f.date_select :issue_date, {}, class: 'form-control' %>
+      </div>
+      <div class="form-group form-inline">
+        <%= f.label t('fields.begin_date') %><br>
+        <%= f.date_select :begin_date, {}, class: 'form-control' %>
+      </div>
+      <div class="form-group form-inline">
+        <%= f.label t('fields.due_date') %><br>
+        <%= f.date_select :due_date, {}, class: 'form-control' %>
+      </div>            
     </div>
   </div>
 

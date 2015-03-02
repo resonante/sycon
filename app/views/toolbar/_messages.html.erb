@@ -1,0 +1,28 @@
+<ul class="nav nav-pills">
+  <li role="presentation" <%= 'class=active' if controller.action_name == 'new' %>>
+    <%= link_to new_message_path do %>
+      <span class='glyphicon glyphicon-pencil'> <%= t('messages.new') %></span>
+    <% end %>
+  </li>
+  <li role="presentation" <%= 'class=active' if params[:box] == 'inbox' %>>
+    <%= link_to conversations_path(box: :inbox) do %>
+      <span class='glyphicon glyphicon-inbox'>
+      <%= t('messages.inbox') %>
+      </span> (<%#= current_user.unread_messages_count %>)
+    <% end %>  
+  </li>
+  <li role="presentation" <%= 'class=active' if params[:box] == 'sentbox' %>>
+    <%= link_to conversations_path(box: :sentbox) do %>
+      <span class='glyphicon glyphicon-inbox'>
+      <%= t('messages.sent') %>
+      </span>
+    <% end %> 
+  </li> 
+  <li role="presentation" <%= 'class=active' if params[:box] == 'trash' %>>
+    <%= link_to conversations_path(box: :trash) do %>
+      <span class='glyphicon glyphicon-trash'>
+      <%= t('messages.trash') %>
+      </span>
+    <% end %>
+  </li>    
+</ul>

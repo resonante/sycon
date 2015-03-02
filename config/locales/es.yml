@@ -38,6 +38,12 @@ es:
    title: "Valuaciones"
    new: "Nueva Valuación"
    edit: "Editar Valuación"
+  messages:
+    title: "Mensajes"
+    new: "Escribir"
+    inbox: "Bandeja"
+    sent: "Enviados"
+    trash: "Papelera"
   actions:
    title: "Acciones"
    save: "Guardar"
@@ -60,3 +66,63 @@ es:
    date: "Fecha"
    description: "Descripción"
    order_number: "Número de Orden"
+   issue_date: "Emisión"
+   begin_date: "Inicio"
+   due_date: "Entrega"
+   customer_select: "Selecciona un Cliente"
+   work_select: "Selecciona una Obra"
+   supplier_select: "Selecciona un Proveedor"
+   date: "Fecha"
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    - 
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d de %B de %Y"
+      short: "%d de %b"
+    month_names:
+    - 
+    - enero
+    - febrero
+    - marzo
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    order:
+    - :day
+    - :month
+    - :year   

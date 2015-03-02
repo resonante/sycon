@@ -40,6 +40,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= current_user.email %></a></li>
+            <li><a href="<%= messages_path %>"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> <%= t('messages.title') %></a></li>            
             <li><a href="<%= destroy_user_session_path %>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <%= t('users.logout') %></a></li>
           </ul>
         </div>
