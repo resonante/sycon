@@ -27,6 +27,7 @@ module Sycon
       Devise::SessionsController.layout "sessions"
       Devise::RegistrationsController.layout "sessions"
       Devise::PasswordsController.layout "sessions"
+      Devise::InvitationsController.layout "sessions"
     end
 
   end

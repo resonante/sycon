@@ -1,9 +1,53 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
+
+<h1 class="page-header"><%= @agent.name %></h1>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('fields.name') %></strong><br>
   <%= @agent.name %>
 </p>
+
+<p>
+  <strong><%= t('fields.email') %></strong><br>
+  <%= @agent.email %>
+</p>
+
+<p>
+  <strong><%= t('fields.address') %></strong><br>
+  <%= @agent.address %>
+</p>
+
+<p>
+  <strong><%= t('fields.phone') %></strong><br>
+  <%= @agent.phone %>
+</p>
+
+<p>
+  <strong><%= t('fields.mobile') %></strong><br>
+  <%= @agent.mobile %>
+</p>
+
+<p>
+  <strong><%= t('fields.state') %></strong><br>
+  <%= @agent.state %>
+</p>
+
+<p>
+  <strong><%= t('fields.town') %></strong><br>
+  <%= @agent.town %>
+</p>
+
+<p>
+  <strong><%= t('fields.description') %></strong><br>
+  <%= @agent.description %>
+</p>
+
+<hr>
 
 <%= link_to t('actions.edit'), edit_agent_path(@agent) %> |
 <%= link_to t('actions.back'), agents_path %>

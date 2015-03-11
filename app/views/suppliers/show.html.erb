@@ -1,9 +1,53 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
+
+<h1 class="page-header"><%= @supplier.name %></h1>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('fields.name') %></strong><br>
   <%= @supplier.name %>
 </p>
+
+<p>
+  <strong><%= t('fields.email') %></strong><br>
+  <%= @supplier.email %>
+</p>
+
+<p>
+  <strong><%= t('fields.address') %></strong><br>
+  <%= @supplier.address %>
+</p>
+
+<p>
+  <strong><%= t('fields.phone') %></strong><br>
+  <%= @supplier.phone %>
+</p>
+
+<p>
+  <strong><%= t('fields.mobile') %></strong><br>
+  <%= @supplier.mobile %>
+</p>
+
+<p>
+  <strong><%= t('fields.state') %></strong><br>
+  <%= @supplier.state %>
+</p>
+
+<p>
+  <strong><%= t('fields.town') %></strong><br>
+  <%= @supplier.town %>
+</p>
+
+<p>
+  <strong><%= t('fields.description') %></strong><br>
+  <%= @supplier.description %>
+</p>
+
+<hr>
 
 <%= link_to t('actions.edit'), edit_supplier_path(@supplier) %> |
 <%= link_to t('actions.back'), suppliers_path %>

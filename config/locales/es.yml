@@ -71,8 +71,11 @@ es:
    due_date: "Entrega"
    customer_select: "Selecciona un Cliente"
    work_select: "Selecciona una Obra"
+   works_select: "Selecciona Obras"
    supplier_select: "Selecciona un Proveedor"
    date: "Fecha"
+   work: "Obra"
+   customer: "Cliente"
   date:
     abbr_day_names:
     - dom

@@ -33,6 +33,7 @@ class AgentsController < ApplicationController
     @works = Work.all
     respond_to do |format|
       if @agent.save
+        User.invite!(:email => params[:agent][:email])
         format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
         format.json { render :show, status: :created, location: @agent }
       else
@@ -77,6 +78,6 @@ class AgentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def agent_params
-      params.require(:agent).permit(:name, :email, :address, :phone, :mobile, :state, :town, :description)
+      params.require(:agent).permit(:name, :email,:password, :address, :phone, :mobile, :state, :town, :description)
     end
 end

@@ -27,6 +27,7 @@ gem 'rails_12factor'
 
 # Project gems
 gem 'devise'
+gem 'devise_invitable'
 gem 'mailboxer', :git => 'git://github.com/div/mailboxer.git', :branch => 'rails42-foreigner'
 gem 'kaminari'
 

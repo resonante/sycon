@@ -1,9 +1,53 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
+
+<h1 class="page-header"><%= @customer.name %></h1>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('fields.name') %></strong><br>
   <%= @customer.name %>
 </p>
+
+<p>
+  <strong><%= t('fields.email') %></strong><br>
+  <%= @customer.email %>
+</p>
+
+<p>
+  <strong><%= t('fields.address') %></strong><br>
+  <%= @customer.address %>
+</p>
+
+<p>
+  <strong><%= t('fields.phone') %></strong><br>
+  <%= @customer.phone %>
+</p>
+
+<p>
+  <strong><%= t('fields.mobile') %></strong><br>
+  <%= @customer.mobile %>
+</p>
+
+<p>
+  <strong><%= t('fields.state') %></strong><br>
+  <%= @customer.state %>
+</p>
+
+<p>
+  <strong><%= t('fields.town') %></strong><br>
+  <%= @customer.town %>
+</p>
+
+<p>
+  <strong><%= t('fields.description') %></strong><br>
+  <%= @customer.description %>
+</p>
+
+<hr>
 
 <%= link_to t('actions.edit'), edit_customer_path(@customer) %> |
 <%= link_to t('actions.back'), customers_path %>
