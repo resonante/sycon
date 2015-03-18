@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @roles = Role.all
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: t('users.success_create') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     @user.roles << Role.find(params[:roles])
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice: t('users.success_update') }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }

@@ -28,7 +28,7 @@ class SuppliersController < ApplicationController
 
     respond_to do |format|
       if @supplier.save
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully created.' }
+        format.html { redirect_to @supplier, notice: t('suppliers.success_create') }
         format.json { render :show, status: :created, location: @supplier }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class SuppliersController < ApplicationController
   def update
     respond_to do |format|
       if @supplier.update(supplier_params)
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully updated.' }
+        format.html { redirect_to @supplier, notice: t('suppliers.success_update') }
         format.json { render :show, status: :ok, location: @supplier }
       else
         format.html { render :edit }

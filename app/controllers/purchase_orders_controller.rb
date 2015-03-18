@@ -36,7 +36,7 @@ class PurchaseOrdersController < ApplicationController
     @purchase_order = PurchaseOrder.new(purchase_order_params)
     respond_to do |format|
       if @purchase_order.save
-        format.html { redirect_to @purchase_order, notice: 'Purchase order was successfully created.' }
+        format.html { redirect_to @purchase_order, notice: t('purchase_orders.success_create') }
         format.json { render :show, status: :created, location: @purchase_order }
       else
         format.html { render :new }
@@ -50,7 +50,7 @@ class PurchaseOrdersController < ApplicationController
   def update
     respond_to do |format|
       if @purchase_order.update(purchase_order_params)
-        format.html { redirect_to @purchase_order, notice: 'Purchase order was successfully updated.' }
+        format.html { redirect_to @purchase_order, notice: t('purchase_orders.success_update') }
         format.json { render :show, status: :ok, location: @purchase_order }
       else
         format.html { render :edit }

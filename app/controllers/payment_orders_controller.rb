@@ -28,7 +28,7 @@ class PaymentOrdersController < ApplicationController
 
     respond_to do |format|
       if @payment_order.save
-        format.html { redirect_to @payment_order, notice: 'Payment order was successfully created.' }
+        format.html { redirect_to @payment_order, notice: t('payment_orders.success_create') }
         format.json { render :show, status: :created, location: @payment_order }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class PaymentOrdersController < ApplicationController
   def update
     respond_to do |format|
       if @payment_order.update(payment_order_params)
-        format.html { redirect_to @payment_order, notice: 'Payment order was successfully updated.' }
+        format.html { redirect_to @payment_order, notice: t('payment_orders.success_update') }
         format.json { render :show, status: :ok, location: @payment_order }
       else
         format.html { render :edit }

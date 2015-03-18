@@ -34,7 +34,7 @@ class AgentsController < ApplicationController
     respond_to do |format|
       if @agent.save
         User.invite!(:email => params[:agent][:email])
-        format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
+        format.html { redirect_to @agent, notice: t('agents.success_create') }
         format.json { render :show, status: :created, location: @agent }
       else
         format.html { render :new }
@@ -51,7 +51,7 @@ class AgentsController < ApplicationController
     @works = Work.all    
     respond_to do |format|
       if @agent.update(agent_params)
-        format.html { redirect_to @agent, notice: 'Agent was successfully updated.' }
+        format.html { redirect_to @agent, notice: t('agents.success_update') }
         format.json { render :show, status: :ok, location: @agent }
       else
         format.html { render :edit }

@@ -28,7 +28,7 @@ class PurchaseOrderItemsController < ApplicationController
 
     respond_to do |format|
       if @purchase_order_item.save
-        format.html { redirect_to @purchase_order_item, notice: 'Purchase order item was successfully created.' }
+        format.html { redirect_to @purchase_order_item, notice: t('purchase_orders.success_create') }
         format.json { render :show, status: :created, location: @purchase_order_item }
       else
         format.html { render :new }

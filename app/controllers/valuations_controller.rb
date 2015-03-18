@@ -28,7 +28,7 @@ class ValuationsController < ApplicationController
 
     respond_to do |format|
       if @valuation.save
-        format.html { redirect_to @valuation, notice: 'Valuation was successfully created.' }
+        format.html { redirect_to @valuation, notice: t('valuations.success_create') }
         format.json { render :show, status: :created, location: @valuation }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ValuationsController < ApplicationController
   def update
     respond_to do |format|
       if @valuation.update(valuation_params)
-        format.html { redirect_to @valuation, notice: 'Valuation was successfully updated.' }
+        format.html { redirect_to @valuation, notice: t('valuations.success_update') }
         format.json { render :show, status: :ok, location: @valuation }
       else
         format.html { render :edit }
