@@ -76,7 +76,11 @@
           <td><%= item.unit %></td>
           <td><%= item.quantity %></td>
           <td><%= item.price %></td>
+          <% if !item.quantity.nil? && !item.price.nil? %>
           <td><%=  item.price * item.quantity %></td>
+          <% else %>
+          <td><%= 0.0 %></td>
+          <% end %>
         </tr>
     <% end %>
   </tbody>

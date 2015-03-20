@@ -7,9 +7,9 @@ $ ->
 					<td><input class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][item]" id="purchase_order_purchase_order_items_'+item+'_item" type="text"></td>
 					<td><textarea class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][description]" id="purchase_order_purchase_order_items_'+item+'_description"></textarea></td>
 					<td><input class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][unit]" id="purchase_order_purchase_order_items_'+item+'_unit" type="text"></td>
-					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][quantity]" id="purchase_order_purchase_order_items_attributes_'+item+'_quantity" type="text"></td>
-					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][price]" id="purchase_order_purchase_order_items_attributes_'+item+'_price" type="text"></td>
-					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][total]" id="purchase_order_purchase_order_items_attributes_'+item+'_total" type="text" disabled="disabled"></td>
+					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][quantity]" id="purchase_order_purchase_order_items_attributes_'+item+'_quantity" type="text" value="0"></td>
+					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][price]" id="purchase_order_purchase_order_items_attributes_'+item+'_price" type="text" value="0"></td>
+					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][total]" id="purchase_order_purchase_order_items_attributes_'+item+'_total" type="text" disabled="disabled" value="0"></td>
 				</tr>'
 		$("#items-table").append html
 		$(".remove_item").on "click", ->

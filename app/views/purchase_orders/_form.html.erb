@@ -123,7 +123,11 @@
           <td><%= ff.text_field :unit, class: 'form-control' %></td>
           <td><%= ff.text_field :quantity, class: 'form-control calculate' %></td>
           <td><%= ff.text_field :price, class: 'form-control calculate' %></td>
+          <% if !ff.object.quantity.nil? && !ff.object.price.nil? %>
           <td><%= ff.text_field :total, class: 'form-control', disabled: true, :value => ff.object.quantity * ff.object.price %></td>
+          <% else %>
+          <td><%= ff.text_field :total, class: 'form-control', disabled: true, :value => 0 %></td>
+          <% end %>
         </tr>
       <% end %>
       <% item+1 %>
