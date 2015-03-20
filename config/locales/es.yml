@@ -74,6 +74,9 @@ es:
    edit: "Editar"
    back: "Volver"
    show: "Ver"
+   sure: "¿Estás Seguro?"
+   pdf_export: "Exportar a PDF"
+   excel_export: "Exportar a MS Excel"
    add_item: "Nuevo Item"
    settings: "Configuraciones"
   fields:

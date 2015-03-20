@@ -102,8 +102,9 @@
 
   <table class="table table-striped" id="items-table">
   <thead>
+    <td></td>
     <td>Item #</td>
-    <td>Description</td>
+    <td>Descripción</td>
     <td>Unidad</td>
     <td>Cantidad</td>
     <td>Precio Unitario</td>
@@ -114,13 +115,15 @@
     <%= f.fields_for :purchase_order_items do |ff| %>
       <% if ff.object.id? || action_name == 'new' %>
         <%= ff.hidden_field :id, class: 'form-control' %>
+        <%= ff.hidden_field :_destroy, class: 'form-control' %>
         <tr>
+          <td><a data-itemid="<%= ff.index %>" class="<% if action_name == 'new' %>remove_item<% else %>d_remove_item<% end %>" style="padding-right:12px;" href="#"><i class="glyphicon glyphicon-trash"></i></a></td>
           <td><%= ff.text_field :item, class: 'form-control' %></td>
           <td><%= ff.text_area :description, class: 'form-control' %></td>
           <td><%= ff.text_field :unit, class: 'form-control' %></td>
-          <td><%= ff.text_field :quantity, class: 'form-control' %></td>
-          <td><%= ff.text_field :price, class: 'form-control' %></td>
-          <td></td>
+          <td><%= ff.text_field :quantity, class: 'form-control calculate' %></td>
+          <td><%= ff.text_field :price, class: 'form-control calculate' %></td>
+          <td><%= ff.text_field :total, class: 'form-control', disabled: true, :value => ff.object.quantity * ff.object.price %></td>
         </tr>
       <% end %>
       <% item+1 %>

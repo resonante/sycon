@@ -1,4 +1,86 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_purchase_order_path(@purchase_order) %> |
-<%= link_to 'Back', purchase_orders_path %>
+<h1 class="page-header"><%= t('purchase_orders.title') %> / <%= @purchase_order.reference %></h1>
+
+  <div class="form-group">
+    <%= link_to t('actions.pdf_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item', :target => '_blank' } %>
+    <%= link_to t('actions.excel_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item' } %>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+          <%= @customer.name %>
+        </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('suppliers.title').singularize.chop %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+          <%= @supplier.name %>
+        </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('works.title').singularize %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+          <%= @work.name %>
+        </div>
+    </div>
+  </div> 
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('fields.date') %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group form-inline">
+        <%= t('fields.issue_date')%>: <%= @purchase_order.issue_date %>
+      </div>
+      <div class="form-group form-inline">
+        <%= t('fields.begin_date')%>: <%= @purchase_order.begin_date %>
+      </div>
+      <div class="form-group form-inline">
+        <%= t('fields.due_date')%>: <%= @purchase_order.due_date %>
+      </div>            
+    </div>
+  </div>   
+
+  <h3 class="page-header"><%= t('.items') %></h3>
+
+  <table class="table table-striped" id="items-table">
+  <thead>
+    <td>Item #</td>
+    <td>Description</td>
+    <td>Unidad</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+    <td>Total</td>
+  </thead>
+  <tbody>
+    <% @purchase_order_items.each do |item| %>
+        <tr>
+          <td><%= item.item %></td>
+          <td><%= item.description %></td>
+          <td><%= item.unit %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.price %></td>
+          <td><%=  item.price * item.quantity %></td>
+        </tr>
+    <% end %>
+  </tbody>
+  </table>
+
+<%= link_to t('actions.edit'), edit_purchase_order_path(@purchase_order) %> |
+<%= link_to t('actions.back'), purchase_orders_path %>

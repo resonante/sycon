@@ -10,6 +10,16 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1
   # GET /purchase_orders/1.json
   def show
+    @customer = @purchase_order.customer
+    @supplier = @purchase_order.supplier
+    @work = @purchase_order.work
+    @purchase_order_items = @purchase_order.purchase_order_items
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "file_name", :template => 'purchase_orders/show.html.erb'
+      end
+    end    
   end
 
   # GET /purchase_orders/new
@@ -69,6 +79,19 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
+  def preview_pdf
+    @products = Product.all
+ 
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = Prawn::Document.new
+        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
+      end
+    end
+ 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase_order
@@ -77,7 +100,7 @@ class PurchaseOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_order_params
-      params.require(:purchase_order).permit(:customer_id, :supplier_id, :work_id, :issue_date, :begin_date, :due_date, :reference, purchase_order_items_attributes: [:id, :item, :description, :unit, :quantity, :price])
+      params.require(:purchase_order).permit(:customer_id, :supplier_id, :work_id, :issue_date, :begin_date, :due_date, :reference, purchase_order_items_attributes: [:id, :item, :description, :unit, :quantity, :price, :_destroy])
     end
 
 end

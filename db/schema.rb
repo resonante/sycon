@@ -114,10 +114,10 @@ ActiveRecord::Schema.define(version: 20150302020539) do
     t.integer  "item"
     t.text     "description"
     t.string   "unit"
-    t.decimal  "quantity"
-    t.decimal  "price"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.decimal  "quantity",          default: 0.0
+    t.decimal  "price",             default: 0.0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "purchase_orders", force: :cascade do |t|

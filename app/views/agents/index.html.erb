@@ -25,9 +25,10 @@
 <script>
 function actionsFormatter(value) {
   var actions = '';
+  var delmsg = '<%= t("actions.sure") %>';
   actions += '<a style="padding-right:12px;" href="/agents/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
   actions += '<a style="padding-right:12px;" href="/agents/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
-  actions += '<a style="padding-right:12px;" href="/agents/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/agents/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
   return actions;
 }
 </script>

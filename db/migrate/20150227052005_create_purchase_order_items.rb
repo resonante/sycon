@@ -5,8 +5,8 @@ class CreatePurchaseOrderItems < ActiveRecord::Migration
       t.integer :item
       t.text :description
       t.string :unit
-      t.decimal :quantity
-      t.decimal :price
+      t.decimal :quantity, default: 0 
+      t.decimal :price, default: 0
       t.timestamps null: false
     end
   end

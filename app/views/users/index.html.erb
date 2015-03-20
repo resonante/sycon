@@ -12,11 +12,12 @@
        data-pagination="true"
        data-search="true"
        data-height="500"
+       data-flat="true"
        data-toolbar="#toolbar">
     <thead>
     <tr>
         <th data-field="email" data-sortable="true"><%= t('users.name') %></th>
-        <th data-field="name" data-sortable="true"><%= t('roles.title') %></th>
+        <th data-field="role.name" data-sortable="true"><%= t('fields.role') %></th>
         <th data-field="id" data-formatter="actionsFormatter"><%= t('.actions') %></th>
     </tr>
     </thead>
@@ -24,9 +25,10 @@
 <script>
 function actionsFormatter(value) {
   var actions = '';
+  var delmsg = '<%= t("actions.sure") %>';  
   actions += '<a style="padding-right:12px;" href="/users/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
   actions += '<a style="padding-right:12px;" href="/users/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
-  actions += '<a style="padding-right:12px;" href="/users/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/users/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
   return actions;
 }
 </script>
