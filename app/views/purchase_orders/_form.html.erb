@@ -93,11 +93,6 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label t('fields.order_number') %><br>
-    <%= f.text_field :reference, class: 'form-control' %>
-  </div>   
-
   <h3 class="page-header"><%= t('.items') %></h3>
 
   <table class="table table-striped" id="items-table">
@@ -136,7 +131,10 @@
   </table>
 
   <div class="form-group">
-    <%= link_to t('actions.add_item'), '#', { :class => 'btn btn-default', :id => 'new-item' } %>
+  <button id="new-item" type="button" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <%= t('actions.add_item') %>
+  </button>
+    <%#= link_to t('actions.add_item'), '#', { :class => 'btn btn-default', :id => 'new-item' } %>
   </div>
   <hr>  
   <div class="form-group">

@@ -79,6 +79,8 @@ es:
    excel_export: "Exportar a MS Excel"
    add_item: "Nuevo Item"
    settings: "Configuraciones"
+   modify_order: "Modificar esta Orden de Compra"
+   send: "Enviar"
   fields:
    id: "Id"
    name: "Nombre"
@@ -103,6 +105,9 @@ es:
    date: "Fecha"
    work: "Obra"
    customer: "Cliente"
+   subject: "Asunto"
+   recipients: "Destinantarios"
+   message: "Mensaje"
   date:
     abbr_day_names:
     - dom

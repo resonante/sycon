@@ -4,6 +4,7 @@ class CreatePurchaseOrders < ActiveRecord::Migration
       t.belongs_to :customer
       t.belongs_to :supplier
       t.belongs_to :work
+      t.belongs_to :parent
       t.string :reference
       t.text :description
       t.date :issue_date

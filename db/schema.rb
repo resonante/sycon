@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20150302020539) do
     t.integer  "customer_id"
     t.integer  "supplier_id"
     t.integer  "work_id"
+    t.integer  "parent_id"
     t.string   "reference"
     t.text     "description"
     t.date     "issue_date"

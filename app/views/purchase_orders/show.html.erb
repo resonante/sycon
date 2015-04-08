@@ -1,10 +1,16 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
 
 <h1 class="page-header"><%= t('purchase_orders.title') %> / <%= @purchase_order.reference %></h1>
 
   <div class="form-group">
     <%= link_to t('actions.pdf_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item', :target => '_blank' } %>
     <%= link_to t('actions.excel_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item' } %>
+    <%= link_to t('actions.modify_order'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item' } %>
   </div>
 
   <div class="panel panel-default">

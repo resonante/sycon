@@ -33,6 +33,7 @@ gem 'kaminari'
 gem 'prawn'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'paper_trail'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

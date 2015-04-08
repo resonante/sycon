@@ -28,6 +28,7 @@ class PurchaseOrdersController < ApplicationController
     @customers = Customer.all
     @suppliers = Supplier.all
     @purchase_order = PurchaseOrder.new
+    #@purchase_order.reference = Time.now.strftime("%m%Y")
     @purchase_order.purchase_order_items.build
   end
 
@@ -44,6 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # POST /purchase_orders.json
   def create
     @purchase_order = PurchaseOrder.new(purchase_order_params)
+    @purchase_order.reference = Time.now.strftime("%m%Y") + (PurchaseOrder.count + 1).to_s
     respond_to do |format|
       if @purchase_order.save
         format.html { redirect_to @purchase_order, notice: t('purchase_orders.success_create') }
