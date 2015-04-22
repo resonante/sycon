@@ -3,6 +3,8 @@ class CreateSuppliers < ActiveRecord::Migration
     create_table :suppliers do |t|
       t.belongs_to :work
       t.string :name
+      t.string :rif
+      t.string :agent      
       t.string :email
       t.text :address
       t.string :phone

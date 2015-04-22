@@ -13,7 +13,7 @@ class PurchaseOrdersController < ApplicationController
     @customer = @purchase_order.customer
     @supplier = @purchase_order.supplier
     @work = @purchase_order.work
-    @purchase_order_items = @purchase_order.purchase_order_items
+    @purchase_order_items = @purchase_order.purchase_order_items.order('item ASC')
     respond_to do |format|
       format.html
       format.pdf do
@@ -37,7 +37,7 @@ class PurchaseOrdersController < ApplicationController
     @works = Work.all
     @customers = Customer.all
     @suppliers = Supplier.all
-    @purchase_order_items_count = @purchase_order.purchase_order_items.size
+    @purchase_order_items_count = @purchase_order.purchase_order_items.size - 1
     @purchase_order.purchase_order_items.build
   end
 
@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # POST /purchase_orders.json
   def create
     @purchase_order = PurchaseOrder.new(purchase_order_params)
-    @purchase_order.reference = Time.now.strftime("%m%Y") + (PurchaseOrder.count + 1).to_s
+    @purchase_order.reference = Time.now.strftime("%m%y") + '-' +(PurchaseOrder.where("EXTRACT(MONTH FROM created_at) = #{Time.now.strftime("%m")}").count + 1).to_s
     respond_to do |format|
       if @purchase_order.save
         format.html { redirect_to @purchase_order, notice: t('purchase_orders.success_create') }

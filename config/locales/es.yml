@@ -21,7 +21,10 @@ es:
    success_update: "Obra ha sido actualizada con éxito."
    success_delete: "Obra ha sido eliminada con éxito."
   suppliers:
+   name: "Razón Social"
+   agent: "Representante Legal"
    title: "Proveedores"
+   data: "Datos del Contratista"
    new: "Nuevo Proveedor"
    edit: "Editar Proveedor"
    success_create: "Proveedor ha sido creado con éxito."
@@ -62,6 +65,8 @@ es:
    success_create: "Valuación ha sido creada con éxito."
    success_update: "Valuación ha sido actualizada con éxito."
    success_delete: "Valuación ha sido eliminada con éxito."
+   work_data: "Datos del Contrato"
+   sing_title: "Valuación No."
   messages:
     title: "Mensajes"
     new: "Escribir"
@@ -79,7 +84,7 @@ es:
    excel_export: "Exportar a MS Excel"
    add_item: "Nuevo Item"
    settings: "Configuraciones"
-   modify_order: "Modificar esta Orden de Compra"
+   modify_order: "Solicitud de Cambio"
    send: "Enviar"
   fields:
    id: "Id"
@@ -108,6 +113,13 @@ es:
    subject: "Asunto"
    recipients: "Destinantarios"
    message: "Mensaje"
+   value: "Monto"
+   rest_value: "Monto restante"
+   total_value: "Monto total"
+   title: "Título"
+   statement: "Estado de Cuenta"
+   payment_detail: "Detalle de Pago"
+   rif: "RIF"
   date:
     abbr_day_names:
     - dom

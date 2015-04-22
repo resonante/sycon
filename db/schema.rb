@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302020539) do
+ActiveRecord::Schema.define(version: 20150415173842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,8 @@ ActiveRecord::Schema.define(version: 20150302020539) do
   create_table "suppliers", force: :cascade do |t|
     t.integer  "work_id"
     t.string   "name"
+    t.string   "rif"
+    t.string   "agent"
     t.string   "email"
     t.text     "address"
     t.string   "phone"
@@ -183,10 +185,21 @@ ActiveRecord::Schema.define(version: 20150302020539) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "valuation_items", force: :cascade do |t|
+    t.integer  "valuation_id"
+    t.integer  "purchase_order_item_id"
+    t.decimal  "value"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "valuations", force: :cascade do |t|
+    t.integer  "purchase_order_id"
+    t.text     "title"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "reference"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "work_assignments", force: :cascade do |t|

@@ -15,10 +15,12 @@ class SuppliersController < ApplicationController
   # GET /suppliers/new
   def new
     @supplier = Supplier.new
+    @works = Work.all
   end
 
   # GET /suppliers/1/edit
   def edit
+    @works = Work.all
   end
 
   # POST /suppliers
@@ -69,6 +71,6 @@ class SuppliersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def supplier_params
-      params.require(:supplier).permit(:name, :email, :address, :phone, :mobile, :state, :town, :description)
+      params.require(:supplier).permit(:name, :work_id, :rif, :agent, :email, :address, :phone, :mobile, :state, :town, :description)
     end
 end

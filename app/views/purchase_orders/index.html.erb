@@ -24,6 +24,7 @@
         <th data-field="reference" data-sortable="true"><%= t('fields.order_number') %></th>
         <th data-field="customer.name" data-sortable="true"><%= t('fields.customer') %></th>
         <th data-field="work.name" data-sortable="true"><%= t('fields.work') %></th>
+        <th data-field="value" data-sortable="true"><%= t('fields.total') %></th>
         <th data-field="id" data-formatter="actionsFormatter"><%= t('actions.title') %></th>
     </tr>
     </thead>
@@ -32,9 +33,12 @@
 function actionsFormatter(value) {
   var actions = '';
   var delmsg = '<%= t("actions.sure") %>';  
-  actions += '<a style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
-  actions += '<a style="padding-right:12px;" href="/purchase_orders/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
-  actions += '<a data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a title="Ver Orden de Compra" style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
+  actions += '<a title="Editar Orden de Compra" style="padding-right:12px;" href="/purchase_orders/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
+  actions += '<a title="Eliminar Orden de Compra" data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a title="Ver Valuaciones" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations"><i class="glyphicon glyphicon-tags"></i></a>';
+  actions += '<a title="Nueva Valuacion" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations/new"><i class="glyphicon glyphicon-ok-sign"></i></a>';
+  actions += '<a title="Solicitar Cambio de Orden" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations/new"><i class="glyphicon glyphicon-retweet"></i></a>';
   return actions;
 }
 </script>

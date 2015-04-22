@@ -4,8 +4,9 @@ $ ->
 		item = item + 1
 		html = '<tr id="item-'+item+'">
 					<td><a class="remove_item" href="#"><i class="glyphicon glyphicon-trash"></i></a></td>
-					<td><input class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][item]" id="purchase_order_purchase_order_items_'+item+'_item" type="text"></td>
-					<td><textarea class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][description]" id="purchase_order_purchase_order_items_'+item+'_description"></textarea></td>
+					<td>
+					<input class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][item]" id="purchase_order_purchase_order_items_'+item+'_item" type="hidden" value="'+item+'">
+					<textarea rows="6" cols="50" class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][description]" id="purchase_order_purchase_order_items_'+item+'_description"></textarea></td>
 					<td><input class="form-control" name="purchase_order[purchase_order_items_attributes]['+item+'][unit]" id="purchase_order_purchase_order_items_'+item+'_unit" type="text"></td>
 					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][quantity]" id="purchase_order_purchase_order_items_attributes_'+item+'_quantity" type="text" value="0"></td>
 					<td><input class="form-control calculate" name="purchase_order[purchase_order_items_attributes]['+item+'][price]" id="purchase_order_purchase_order_items_attributes_'+item+'_price" type="text" value="0"></td>
@@ -19,10 +20,10 @@ $ ->
 
 		$(".calculate").on "keyup", ->
 			if ($(this).attr('id').match('price'))
-				total = $(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()
+				total = ($(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()).toFixed(2)
 				$('#' + $(this).attr('id').replace('price', 'total')).val(total)
 			else
-				total = $(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()
+				total = ($(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()).toFixed(2)
 				$('#' + $(this).attr('id').replace('quantity', 'total')).val(total)
 			return false
 
@@ -34,10 +35,10 @@ $ ->
 
 	$(".calculate").on "keyup", ->
 		if ($(this).attr('id').match('price'))
-			total = $(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()
+			total = ($(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()).toFixed(2)
 			$('#' + $(this).attr('id').replace('price', 'total')).val(total)
 		else
-			total = $(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()
+			total = ($(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()).toFixed(2)
 			$('#' + $(this).attr('id').replace('quantity', 'total')).val(total)
 		return false
 

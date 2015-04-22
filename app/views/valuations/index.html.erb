@@ -1,22 +1,24 @@
 <% if notice %><p id="notice"><%= notice %></p><% end %>
 
-<h1 class="page-header"><%= t('valuations.title') %></h1>
+<h1 class="page-header"><%= t('valuations.title') %> / OC <%= @purchase_order.reference if params[:purchase_order_id] %></h1>
 <div id="toolbar">
-    <%= link_to t('valuations.new'), new_valuation_path, :class => 'btn btn-primary' %>
+    <%= link_to t('valuations.new'), new_purchase_order_valuation_path, :class => 'btn btn-primary' if params[:purchase_order_id] %>
 </div>
 <table data-toggle="table"
        data-classes="table table-hover table-striped"
        data-sort-name="date_received"
        data-sort-order="desc"
-       data-url="/valuations"
+       data-url="<%= @data_url %>"
        data-pagination="true"
        data-search="true"
        data-height="500"
+       data-flat="true"
        data-toolbar="#toolbar">
     <thead>
     <tr>
-        <th data-field="name" data-sortable="true"><%= t('fields.name') %></th>
-        <th data-field="email" data-sortable="true"><%= t('fields.email') %></th>
+        <th data-field="title" data-sortable="true"><%= t('fields.title') %></th>
+        <th data-field="purchase_order.reference" data-sortable="true"><%= t('fields.order_number') %></th>
+        <th data-field="value" data-sortable="true"><%= t('fields.value') %></th>
         <th data-field="id" data-formatter="actionsFormatter"><%= t('actions.title') %></th>
     </tr>
     </thead>

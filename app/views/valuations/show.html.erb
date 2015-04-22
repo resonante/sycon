@@ -1,4 +1,314 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
+
+<h1 class="page-header"><%= t('valuations.sing_title') %> <%= @valuation.reference %> / <%= @purchase_order.reference %></h1>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+          <%= @customer.name %>
+        </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('works.title').singularize %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+          <%= @work.name %>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+  	<div class="col-xs-10 col-md-6">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title"><%= t('suppliers.data') %></h3>
+	    </div>
+	    <div class="panel-body">
+	        <div class="form-group">
+			  <table class="table table-striped" id="items-table">
+			  <tr>
+			    <td width="50%">Contratista</td>
+			    <td><%= @supplier.name %></td>
+			  </tr>
+				<tr>
+				  <td>Representante Legal</td>
+				  <td><%= @supplier.agent %></td>
+				</tr>		  
+				<tr>
+				  <td>Dirección de la Empresa</td>
+				  <td><%= @supplier.address %></td>
+				</tr>
+				<tr>
+				  <td>RIF de la Empresa</td>
+				  <td><%= @supplier.rif %></td>
+				</tr>
+				<tr>
+				  <td>Factura No.</td>
+				  <td></td>
+				</tr>
+				<tr>
+				  <td>Anticipo Entregado (12%)</td>
+				  <td></td>
+				</tr>									
+			  </table> 
+	        </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-xs-10 col-md-6">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title"><%= t('valuations.work_data') %></h3>
+	    </div>
+	    <div class="panel-body">
+	        <div class="form-group">
+			  <table class="table table-striped" id="items-table">
+			  <tr>
+			    <td width="50%">Contrato Original sin IVA</td>
+			    <td><%= number_to_currency(@valuation.purchase_order.total_value, unit: '', separator: ",", delimiter: ".") %></td>
+			  </tr>
+				<tr>
+				  <td>Aumentos a la Fecha</td>
+				  <td></td>
+				</tr>		  
+				<tr>
+				  <td>Contrato Actual sin IVA</td>
+				  <td><%= number_to_currency(@valuation.purchase_order.total_value, unit: '', separator: ",", delimiter: ".") %></td>
+				</tr>
+				<tr>
+				  <td>Fecha Emision OC</td>
+				  <td><%= @valuation.purchase_order.issue_date.strftime('%d-%m-%Y') %></td>
+				</tr>
+				<tr>
+				  <td>Fecha Inicio OC</td>
+				  <td><%= @valuation.purchase_order.begin_date.strftime('%d-%m-%Y') %></td>
+				</tr>
+				<tr>
+				  <td>Fecha Entrega OC</td>
+				  <td><%= @valuation.purchase_order.due_date.strftime('%d-%m-%Y') %></td>
+				</tr>									
+			  </table> 
+	        </div>
+	    </div>
+	  </div>
+	</div>  
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('fields.statement') %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+		  <table class="table table-striped" id="items-table">
+		  <tr>
+		    <td>Concepto</td>
+		    <td>Acumulado Anterior</td>
+		    <td>Este Pago</td>
+		    <td>Acumulado Actual</td>
+		    <td>Falta</td>
+		  </tr>
+			<tr>
+			  <td>Obra Ejecuta</td>
+			  <td><%= number_to_currency(@acumulated_before, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td><%= number_to_currency(@acumulated + @valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td><%= number_to_currency(@rest_value, unit: '', separator: ",", delimiter: ".") %></td>
+			</tr>		  
+			<tr>
+			  <td>Anticipos Recibidos (30%)</td>
+			  <td><%= number_to_currency(@order_total * 0.30, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Anticipos Amortizados</td>
+			  <td><%= number_to_currency(@acumulated_before - (@order_total * 0.30), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td><%= number_to_currency((@order_total * 0.30) - @valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Conceptos Adicionales</td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>IVA (12%)</td>
+			  <td></td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value) * 0.12, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>ISLR (5%)</td>
+			  <td></td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value) * 0.02, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Retenciones Laborales (5%)</td>
+			  <td></td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value) * 0.05, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Retención Fiel Cumplimiento (10%)</td>
+			  <td></td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value) * 0.10, unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			</tr>									
+		  </table>          
+        </div>
+    </div>
+  </div>  
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('fields.payment_detail') %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+		  <table class="table table-striped" id="items-table">
+		  <tr>
+		    <td>Concepto</td>
+		    <td>Monto</td>
+		    <td>IVA</td>
+		    <td>ISLR</td>
+		    <td>Total</td>
+		  </tr>
+			<tr>
+			  <td>Obra Ejecutada</td>
+			  <td><%= number_to_currency(@valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Menos Amortización Anticipada</td>
+			  <td><%= number_to_currency((@order_total * 0.30) - @valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Menos Retenciones Laborales</td>
+			  <td><%= number_to_currency((@valuation.valuation_items.sum(:value) * 0.05), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td>Retención Fiel Cumplimiento</td>
+			  <td><%= number_to_currency((@valuation.valuation_items.sum(:value) * 0.10), unit: '', separator: ",", delimiter: ".") %></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr>
+			  <td><strong>Totales</strong></td>
+			  <td><strong><%= number_to_currency((@valuation.valuation_items.sum(:value)) - ((@order_total * 0.30) - @valuation.valuation_items.sum(:value)) - (@valuation.valuation_items.sum(:value) * 0.05) - (@valuation.valuation_items.sum(:value) * 0.10), unit: '', separator: ",", delimiter: ".") %></strong></td>
+			  <td><strong><%= number_to_currency((@valuation.valuation_items.sum(:value) * 0.12), unit: '', separator: ",", delimiter: ".") %></strong></td>
+			  <td><strong><%= number_to_currency((@valuation.valuation_items.sum(:value) * 0.02), unit: '', separator: ",", delimiter: ".") %></strong></td>
+			  <td></td>
+			</tr>												
+		  </table>          
+        </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('valuations.sing_title') %> <%= @valuation.reference %> / <%= @purchase_order.reference %></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+		  <table class="table table-striped" id="items-table">
+		  <thead>
+		    <td>Item #</td>
+		    <td>Descripción</td>
+		    <td>Presupuesto</td>
+		    <td>Relación Actual</td>
+		    <td>%</td>
+		    <td>Acumulado Anterior</td>
+		    <td>%</td>
+		    <td>Acumulado Actual</td>
+		    <td>%</td>        
+		  </thead>
+		    <% @purchase_order_items.each_with_index do |purchase_order_item, index| %>
+		      <tr>
+		        <td width="7%"><%= index + 1 %></td>
+		        <td width="23%"><%= purchase_order_item.description %></td>
+		        <td><%= number_to_currency(purchase_order_item.quantity * purchase_order_item.price, unit: '', separator: ",", delimiter: ".") %></td>
+		        
+		        <% if action_name == 'new' %>
+		        <td><input name="valuation[valuation_items[<%= purchase_order_item.id %>]]" value="" class="form-control calculate" /></td>
+		        <td><%= number_to_currency(0, unit: '', separator: ",", delimiter: ".") %></td>        
+		        <% else %>
+		        <td><%= number_to_currency(purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value, unit: '', separator: ",", delimiter: ".") %></td>
+		        <td><%= number_to_currency((purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value * 100) / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>        
+		        <% end %>
+		        
+		        <% if @valuation.reference == 1 %>
+		          <td><%= number_to_currency(0, unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency(0, unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency(purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value, unit: '', separator: ",", delimiter: ".") %></td> 
+		          <td><%= number_to_currency((purchase_order_item.valuation_items.where(valuation_id: 1).first.value * 100) / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+
+		        <% else %>
+		      
+		          <% if action_name == 'new' %>
+		          <td><%= number_to_currency(purchase_order_item.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency((purchase_order_item.valuation_items.sum(:value)) * 100 / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+		          <% else %>
+		          <td><%= number_to_currency(purchase_order_item.valuation_items.includes(:valuation).where('reference < '+@valuation.reference.to_s).sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency((purchase_order_item.valuation_items.includes(:valuation).where('reference < '+@valuation.reference.to_s).sum(:value)) * 100 / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+		          <% end %>
+		      
+		          <% if action_name == 'new' %>
+		          <td><%= number_to_currency(purchase_order_item.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency((purchase_order_item.valuation_items.sum(:value)) * 100 / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+		          <% else %>
+		          <td><%= number_to_currency(purchase_order_item.valuation_items.includes(:valuation).where('reference < '+@valuation.reference.to_s).sum(:value) + purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value, unit: '', separator: ",", delimiter: ".") %></td>
+		          <td><%= number_to_currency((purchase_order_item.valuation_items.includes(:valuation).where('reference < '+@valuation.reference.to_s).sum(:value) + purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value) * 100 / (purchase_order_item.quantity * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+		          <% end %>
+
+		        <% end %>        
+		      </tr>
+		    <% end -%>
+		      <tr>
+		        <td></td>
+		        <td></td>
+		        <td><strong><%= number_to_currency(@purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
+		        <td><strong><%= number_to_currency(@valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+		        <td><strong><%= number_to_currency((@valuation.valuation_items.sum(:value) * 100) / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
+		        <td><strong><%= number_to_currency(@acumulated_before, unit: '', separator: ",", delimiter: ".") %></strong></td>
+		        <td><strong><%= number_to_currency(@acumulated_before * 100 / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
+		        <td><strong><%= number_to_currency(@acumulated_before + @valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></strong></td>
+		        <td><strong><%= number_to_currency((@acumulated_before + @valuation.valuation_items.sum(:value)) * 100 / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>                
+		      </tr>    
+		  </table>         
+        </div>
+    </div>
+  </div>
 
 <%= link_to 'Edit', edit_valuation_path(@valuation) %> |
 <%= link_to 'Back', valuations_path %>

@@ -78,18 +78,26 @@
       <h3 class="panel-title"><%= t('fields.date') %></h3>
     </div>
     <div class="panel-body">
-      <div class="form-group form-inline">
-        <%= f.label t('fields.issue_date') %><br>
-        <%= f.date_select :issue_date, {}, class: 'form-control' %>
-      </div>
-      <div class="form-group form-inline">
-        <%= f.label t('fields.begin_date') %><br>
-        <%= f.date_select :begin_date, {}, class: 'form-control' %>
-      </div>
-      <div class="form-group form-inline">
-        <%= f.label t('fields.due_date') %><br>
-        <%= f.date_select :due_date, {}, class: 'form-control' %>
-      </div>            
+      <div class="row">
+        <div class="col-xs-10 col-md-4">
+          <div class="form-group form-inline">
+            <%= f.label t('fields.issue_date') %><br>
+            <%= f.date_select :issue_date, {}, class: 'form-control' %>
+          </div>
+        </div>  
+        <div class="col-xs-10 col-md-4">  
+          <div class="form-group form-inline">
+            <%= f.label t('fields.begin_date') %><br>
+            <%= f.date_select :begin_date, {}, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-4">  
+          <div class="form-group form-inline">
+            <%= f.label t('fields.due_date') %><br>
+            <%= f.date_select :due_date, {}, class: 'form-control' %>
+          </div>
+        </div>
+      </div>  
     </div>
   </div>
 
@@ -98,7 +106,6 @@
   <table class="table table-striped" id="items-table">
   <thead>
     <td></td>
-    <td>Item #</td>
     <td>Descripción</td>
     <td>Unidad</td>
     <td>Cantidad</td>
@@ -113,8 +120,8 @@
         <%= ff.hidden_field :_destroy, class: 'form-control' %>
         <tr>
           <td><a data-itemid="<%= ff.index %>" class="<% if action_name == 'new' %>remove_item<% else %>d_remove_item<% end %>" style="padding-right:12px;" href="#"><i class="glyphicon glyphicon-trash"></i></a></td>
-          <td><%= ff.text_field :item, class: 'form-control' %></td>
-          <td><%= ff.text_area :description, class: 'form-control' %></td>
+          <td><%= ff.hidden_field :item, value: item, class: 'form-control' %>
+          <%= ff.text_area :description, class: 'form-control', rows: 6, cols: 50 %></td>
           <td><%= ff.text_field :unit, class: 'form-control' %></td>
           <td><%= ff.text_field :quantity, class: 'form-control calculate' %></td>
           <td><%= ff.text_field :price, class: 'form-control calculate' %></td>
@@ -125,7 +132,7 @@
           <% end %>
         </tr>
       <% end %>
-      <% item+1 %>
+      <% item+=1 %>
     <% end %>
   </tbody>
   </table>
