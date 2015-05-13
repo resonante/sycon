@@ -5,15 +5,20 @@
 </div>
 <% end %>
 
-<h1 class="page-header"><%= t('purchase_orders.title') %></h1>
+<% title = request.url.match('change_orders') ? t('change_orders.title') : t('purchase_orders.title') %>
+<h1 class="page-header"><%= title %> <%= '/ OC' + @purchase_order.reference if params[:id] %></h1>
+
+<% link = request.url.match('change_orders') ? link_to('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> '.html_safe + t('change_orders.new'), '/purchase_orders/' + params[:id] + '/clone', :class => 'btn btn-primary') : link_to('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> '.html_safe + t('purchase_orders.new'), new_purchase_order_path, :class => 'btn btn-primary') %>
+
 <div id="toolbar">
-    <%= link_to t('purchase_orders.new'), new_purchase_order_path, :class => 'btn btn-primary' %>
+    <%= link %>
 </div>
+
 <table data-toggle="table"
        data-classes="table"
        data-sort-name="date_received"
        data-sort-order="desc"
-       data-url="/purchase_orders"
+       data-url="<%= @dataurl %>"
        data-pagination="true"
        data-search="true"
        data-height="500"
@@ -21,7 +26,7 @@
        data-toolbar="#toolbar">
     <thead>
     <tr>
-        <th data-field="reference" data-sortable="true"><%= t('fields.order_number') %></th>
+        <th data-field="reference" data-sortable="true" data-formatter="LinkFormatter"><%= t('fields.order_number') %></th>
         <th data-field="customer.name" data-sortable="true"><%= t('fields.customer') %></th>
         <th data-field="work.name" data-sortable="true"><%= t('fields.work') %></th>
         <th data-field="value" data-sortable="true"><%= t('fields.total') %></th>
@@ -30,15 +35,24 @@
     </thead>
 </table>
 <script>
+function LinkFormatter(value, row) {
+  var actions = '';
+  var delmsg = '<%= t("actions.sure") %>';  
+  actions += '<a title="Ver Orden de Compra" style="padding-right:12px;" href="/purchase_orders/' + row.id + '">' + value + '</a>';
+  return actions;
+}
 function actionsFormatter(value) {
   var actions = '';
   var delmsg = '<%= t("actions.sure") %>';  
   actions += '<a title="Ver Orden de Compra" style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
   actions += '<a title="Editar Orden de Compra" style="padding-right:12px;" href="/purchase_orders/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
   actions += '<a title="Eliminar Orden de Compra" data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/purchase_orders/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  <% if !request.url.match('change_orders') %>  
   actions += '<a title="Ver Valuaciones" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations"><i class="glyphicon glyphicon-tags"></i></a>';
   actions += '<a title="Nueva Valuacion" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations/new"><i class="glyphicon glyphicon-ok-sign"></i></a>';
-  actions += '<a title="Solicitar Cambio de Orden" style="padding-right:12px;" href="/purchase_orders/' + value + '/valuations/new"><i class="glyphicon glyphicon-retweet"></i></a>';
+  actions += '<a title="Ordenes de Cambio" style="padding-right:12px;" href="/purchase_orders/' + value + '/change_orders"><i class="glyphicon glyphicon-retweet"></i></a>';
+  actions += '<a title="<%= t("change_orders.new") %>" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/purchase_orders/' + value + '/clone"><i class="glyphicon glyphicon-duplicate"></i></a>';
+  <% end %>
   return actions;
 }
 </script>

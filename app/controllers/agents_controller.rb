@@ -29,7 +29,8 @@ class AgentsController < ApplicationController
   # POST /agents.json
   def create
     @agent = Agent.new(agent_params)
-    @agent.works << Work.find(params[:works])
+    @agent.works << Work.find(params[:works]) if params[:works]
+    @customers = Customer.all
     @works = Work.all
     respond_to do |format|
       if @agent.save
@@ -52,6 +53,7 @@ class AgentsController < ApplicationController
   def update
     @agent.works.delete_all
     @agent.works << Work.find(params[:works])
+    @customers = Customer.all
     @works = Work.all    
     respond_to do |format|
       if @agent.update(agent_params)

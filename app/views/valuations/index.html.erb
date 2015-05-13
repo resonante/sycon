@@ -1,8 +1,13 @@
-<% if notice %><p id="notice"><%= notice %></p><% end %>
+<% if notice %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong><%= notice %></strong>
+</div>
+<% end %>
 
-<h1 class="page-header"><%= t('valuations.title') %> / OC <%= @purchase_order.reference if params[:purchase_order_id] %></h1>
+<h1 class="page-header"><%= t('valuations.title') %> <%= '/ OC' + @purchase_order.reference if params[:purchase_order_id] %></h1>
 <div id="toolbar">
-    <%= link_to t('valuations.new'), new_purchase_order_valuation_path, :class => 'btn btn-primary' if params[:purchase_order_id] %>
+    <%= link_to '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> '.html_safe + t('valuations.new'), new_purchase_order_valuation_path(@purchase_order), :class => 'btn btn-primary' if params[:purchase_order_id] %>
 </div>
 <table data-toggle="table"
        data-classes="table table-hover table-striped"
@@ -16,19 +21,35 @@
        data-toolbar="#toolbar">
     <thead>
     <tr>
-        <th data-field="title" data-sortable="true"><%= t('fields.title') %></th>
-        <th data-field="purchase_order.reference" data-sortable="true"><%= t('fields.order_number') %></th>
+        <th data-field="title" data-sortable="true" data-formatter="LinkFormatter"><%= t('fields.title') %></th>
+        <th data-field="purchase_order.reference" data-sortable="true" data-formatter="changesFormatter"><%= t('fields.order_number') %></th>
+        <th data-field="quantity" data-sortable="true"><%= t('fields.quantity') %></th>
         <th data-field="value" data-sortable="true"><%= t('fields.value') %></th>
         <th data-field="id" data-formatter="actionsFormatter"><%= t('actions.title') %></th>
     </tr>
     </thead>
 </table>
 <script>
+function LinkFormatter(value, row) {
+  var actions = '';
+  var delmsg = '<%= t("actions.sure") %>';  
+  actions += '<a title="Ver Valuación" style="padding-right:12px;" href="/valuations/' + row.id + '">' + value + '</a>';
+  return actions;
+}
+function changesFormatter(value, row) {
+  var actions = value;
+  if (value.split('-').length == 3 ) {
+    actions += ' <a title="Orden de Cambio" style="padding-right:12px;" href="/purchase_orders/' + row.purchase_order_id + '"><i class="glyphicon glyphicon-retweet"></i></a>';
+  }
+  return actions;
+}
 function actionsFormatter(value) {
   var actions = '';
+  var delmsg = '<%= t("actions.sure") %>'; 
   actions += '<a style="padding-right:12px;" href="/valuations/' + value + '"><i class="glyphicon glyphicon-eye-open"></i></a>';
   actions += '<a style="padding-right:12px;" href="/valuations/' + value + '/edit"><i class="glyphicon glyphicon-pencil"></i></a>';
-  actions += '<a style="padding-right:12px;" href="/valuations/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a title="Eliminar Orden de Compra" data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/valuations/' + value + '"><i class="glyphicon glyphicon-trash"></i></a>';
+  actions += '<a title="Orden de Pago" data-method="delete" data-confirm="' + delmsg + '" style="padding-right:12px;" href="/valuations/' + value + '"><i class="glyphicon glyphicon-file"></i></a>';
   return actions;
 }
 </script>

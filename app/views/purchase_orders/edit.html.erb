@@ -1,5 +1,8 @@
-<h1 class="page-header"><%= t('purchase_orders.edit') %></h1>
-
+<% if @purchase_order.parent_id.nil? %>
+<h1 class="page-header"><%= t('purchase_orders.edit') %> / <%= 'OC' + @purchase_order.reference %></h1>
+<% else %>
+<h1 class="page-header"><%= t('change_orders.sing_title') %> / <%= 'OC' + @purchase_order.reference %></h1>
+<% end %>
 <%= render 'form' %>
 
 <%= link_to t('actions.show'), @purchase_order %> |

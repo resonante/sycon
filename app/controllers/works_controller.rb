@@ -27,7 +27,7 @@ class WorksController < ApplicationController
   # POST /works.json
   def create
     @work = Work.new(work_params)
-
+    @customers = Customer.all
     respond_to do |format|
       if @work.save
         format.html { redirect_to @work, notice: t('works.success_create') }
@@ -42,6 +42,7 @@ class WorksController < ApplicationController
   # PATCH/PUT /works/1
   # PATCH/PUT /works/1.json
   def update
+    @customers = Customer.all
     respond_to do |format|
       if @work.update(work_params)
         format.html { redirect_to @work, notice: t('works.success_update') }

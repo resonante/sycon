@@ -1,16 +1,24 @@
 Rails.application.routes.draw do
 
+  resources :settings
+
   resources :valuation_items
 
   resources :purchase_order_items
 
   resources :payment_orders
 
-  resources :valuations
+  resources :valuations do |payment_order|
+    resources :payment_orders
+  end
 
   resources :purchase_orders do |purchase_order|
-    resources :valuations
+    resources :valuations 
   end  
+
+  get 'purchase_orders/:id/change_orders' => 'purchase_orders#index'
+  get 'change_orders' => 'purchase_orders#index'
+  get 'purchase_orders/:id/clone' => 'purchase_orders#clone'
 
   resources :roles
 

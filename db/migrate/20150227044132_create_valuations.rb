@@ -5,6 +5,7 @@ class CreateValuations < ActiveRecord::Migration
    	  t.text :title
       t.text :description
       t.integer :reference
+      t.string :invoice
       t.timestamps null: false
     end
   end

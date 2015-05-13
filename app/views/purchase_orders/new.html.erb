@@ -1,5 +1,8 @@
+<% if @purchase_order.parent_id.nil? %>
 <h1 class="page-header"><%= t('purchase_orders.new') %></h1>
-
+<% else %>
+<h1 class="page-header"><%= t('change_orders.new') %></h1>
+<% end %>
 <%= render 'form' %>
 
 <%= link_to t('actions.back'), purchase_orders_path %>

@@ -2,7 +2,7 @@
 
 <h1 class="page-header"><%= t('works.title') %></h1>
 <div id="toolbar">
-    <%= link_to t('works.new'), new_work_path, :class => 'btn btn-primary' %>
+    <%= link_to '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> '.html_safe + t('works.new'), new_work_path, :class => 'btn btn-primary' %>
 </div>
 <table data-toggle="table"
        data-classes="table table-hover table-striped"

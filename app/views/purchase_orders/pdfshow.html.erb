@@ -1,0 +1,102 @@
+
+<%= wicked_pdf_stylesheet_link_tag "bootstrap-yeti.min.css" %>
+<% if @purchase_order.parent_id.nil? %>
+<h1 class="page-header"><%= t('purchase_orders.sing_title') %> / <%= @purchase_order.reference %></h1>
+<% else %>
+<h1 class="page-header"><%= t('change_orders.sing_title') %> / <%= @purchase_order.reference %></h1>
+<% end %>
+
+  <div class="row">
+    <div class="col-xs-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @customer.name %>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('suppliers.title').singularize.chop %></h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @supplier.name %>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('works.title').singularize %></h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @work.name %>
+            </div>
+        </div>
+      </div> 
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('fields.date') %></h3>
+        </div>
+        <div class="panel-body">
+            <small><strong><%= t('fields.issue_date')%>:</strong> <%= @purchase_order.issue_date %></small>
+            <small><strong><%= t('fields.begin_date')%>:</strong> <%= @purchase_order.begin_date %></small>
+            <small><strong><%= t('fields.due_date')%>:</strong> <%= @purchase_order.due_date %></small>
+          </div>            
+        </div>
+      </div>
+    </div> 
+  </div>  
+
+  <h3 class="page-header"><%= t('.items') %></h3>
+
+  <table class="table table-striped" id="items-table">
+  <thead>
+    <td>Item #</td>
+    <td width="45%">Description</td>
+    <td>Unidad</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+    <td>Total</td>
+  </thead>
+  <tbody>
+    <% total = total_price = 0  %>
+    <% @purchase_order_items.each_with_index do |item, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= item.description %></td>
+          <td><%= item.unit %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_to_currency(item.price, unit: '', separator: ",", delimiter: ".") %></td>
+          <% if !item.quantity.nil? && !item.price.nil? %>
+          <% total += item.price * item.quantity %>
+          <% total_price += item.price %>
+          <td><%= number_to_currency(item.price * item.quantity, unit: '', separator: ",", delimiter: ".") %></td>
+          <% else %>
+          <td><%= 0.0 %></td>
+          <% end %>
+        </tr>
+    <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><strong><%= number_to_currency(total, unit: '', separator: ",", delimiter: ".") %></strong></td>
+        </tr>    
+  </tbody>
+  </table>

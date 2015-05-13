@@ -1,4 +1,7 @@
 $ ->
+	for i in [0..purchase_order_items_count]
+		$("#purchase_order_purchase_order_items_attributes_"+i+"_total").autoNumeric('init');
+
 	item = purchase_order_items_count
 	$("#new-item").on "click", ->
 		item = item + 1
@@ -14,6 +17,9 @@ $ ->
 				</tr>'
 		$("#items-table").append html
 		$("#new-item").blur()
+
+		$("#purchase_order_purchase_order_items_attributes_"+item+"_total").autoNumeric('init');
+
 		$(".remove_item").on "click", ->
 			$(this).parent().parent().remove()
 			return false
@@ -21,10 +27,10 @@ $ ->
 		$(".calculate").on "keyup", ->
 			if ($(this).attr('id').match('price'))
 				total = ($(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()).toFixed(2)
-				$('#' + $(this).attr('id').replace('price', 'total')).val(total)
+				$('#' + $(this).attr('id').replace('price', 'total')).autoNumeric('set', total)
 			else
 				total = ($(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()).toFixed(2)
-				$('#' + $(this).attr('id').replace('quantity', 'total')).val(total)
+				$('#' + $(this).attr('id').replace('quantity', 'total')).autoNumeric('set', total)
 			return false
 
 		return false
@@ -36,10 +42,10 @@ $ ->
 	$(".calculate").on "keyup", ->
 		if ($(this).attr('id').match('price'))
 			total = ($(this).val() * $('#' + $(this).attr('id').replace('price', 'quantity')).val()).toFixed(2)
-			$('#' + $(this).attr('id').replace('price', 'total')).val(total)
+			$('#' + $(this).attr('id').replace('price', 'total')).autoNumeric('set', total)
 		else
 			total = ($(this).val() * $('#' + $(this).attr('id').replace('quantity', 'price')).val()).toFixed(2)
-			$('#' + $(this).attr('id').replace('quantity', 'total')).val(total)
+			$('#' + $(this).attr('id').replace('quantity', 'total')).autoNumeric('set', total)
 		return false
 
 	$(".ajax_remove_item").on "click", ->

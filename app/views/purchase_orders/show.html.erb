@@ -5,72 +5,86 @@
 </div>
 <% end %>
 
-<h1 class="page-header"><%= t('purchase_orders.title') %> / <%= @purchase_order.reference %></h1>
+<% if @purchase_order.parent_id.nil? %>
+<h1 class="page-header"><%= t('purchase_orders.sing_title') %> / <%= @purchase_order.reference %></h1>
+<% else %>
+<h1 class="page-header"><%= t('change_orders.sing_title') %> / <%= @purchase_order.reference %></h1>
+<% end %>
+
 
   <div class="form-group">
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
         Exportar <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
         <li><%= link_to t('actions.pdf_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => '', :id => 'new-item', :target => '_blank' } %></li>
         <li><%= link_to t('actions.excel_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => '', :id => 'new-item' } %></li>
       </ul>
-    </div> 
-    <%= link_to t('valuations.new'), new_purchase_order_valuation_path(@purchase_order), { :class => 'btn btn-primary' } %>
-    <%#= link_to t('actions.modify_order'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => 'btn btn-default', :id => 'new-item' } %>
+    </div>
+    <% if @purchase_order.parent_id.nil? %>
+    <%= link_to '<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp&nbsp;'.html_safe + t('valuations.title'), purchase_order_valuations_path(@purchase_order), { :class => 'btn btn-primary' } if @purchase_order.valuations.size > 0 %>
+    <%= link_to '<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> '.html_safe + t('valuations.new'), new_purchase_order_valuation_path(@purchase_order), { :class => 'btn btn-primary' } %>  
+    <%= link_to '<span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> '.html_safe + t("change_orders.new"), "/purchase_orders/#{@purchase_order.id.to_s}/clone", { :class => 'btn btn-warning' } if @purchase_order.valuations.size > 0 %>
+    <% end %>
+
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
-    </div>
-    <div class="panel-body">
-        <div class="form-group">
-          <%= @customer.name %>
+  <div class="row">
+    <div class="col-xs-10 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('customers.title').singularize %></h3>
         </div>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= t('suppliers.title').singularize.chop %></h3>
-    </div>
-    <div class="panel-body">
-        <div class="form-group">
-          <%= @supplier.name %>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @customer.name %>
+            </div>
         </div>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= t('works.title').singularize %></h3>
-    </div>
-    <div class="panel-body">
-        <div class="form-group">
-          <%= @work.name %>
+      </div>
+    </div>  
+    <div class="col-xs-10 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('suppliers.title').singularize.chop %></h3>
         </div>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @supplier.name %>
+            </div>
+        </div>
+      </div>
     </div>
   </div> 
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= t('fields.date') %></h3>
-    </div>
-    <div class="panel-body">
-      <div class="form-group form-inline">
-        <%= t('fields.issue_date')%>: <%= @purchase_order.issue_date %>
+  <div class="row">
+    <div class="col-xs-10 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('works.title').singularize %></h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+              <%= @work.name %>
+            </div>
+        </div>
       </div>
-      <div class="form-group form-inline">
-        <%= t('fields.begin_date')%>: <%= @purchase_order.begin_date %>
-      </div>
-      <div class="form-group form-inline">
-        <%= t('fields.due_date')%>: <%= @purchase_order.due_date %>
-      </div>            
+    </div>  
+    <div class="col-xs-10 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('fields.date') %></h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <small><strong><%= t('fields.issue_date')%>:</strong> <%= @purchase_order.issue_date %></small>
+            <small><strong><%= t('fields.begin_date')%>:</strong> <%= @purchase_order.begin_date %></small>
+            <small><strong><%= t('fields.due_date')%>:</strong> <%= @purchase_order.due_date %></small>
+          </div>            
+        </div>
+      </div>   
     </div>
-  </div>   
-
+  </div>
   <h3 class="page-header"><%= t('.items') %></h3>
 
   <table class="table table-striped" id="items-table">
@@ -111,5 +125,24 @@
   </tbody>
   </table>
 
+  <div class="form-group">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
+        Exportar <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><%= link_to t('actions.pdf_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => '', :id => 'new-item', :target => '_blank' } %></li>
+        <li><%= link_to t('actions.excel_export'), purchase_order_path(@purchase_order, :format => 'pdf'), { :class => '', :id => 'new-item' } %></li>
+      </ul>
+    </div>
+    <% if @purchase_order.parent_id.nil? %>
+    <%= link_to '<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp&nbsp;'.html_safe + t('valuations.title'), purchase_order_valuations_path(@purchase_order), { :class => 'btn btn-primary' } if @purchase_order.valuations.size > 0 %>    
+    <%= link_to '<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> '.html_safe + t('valuations.new'), new_purchase_order_valuation_path(@purchase_order), { :class => 'btn btn-primary' } %>  
+    <%= link_to '<span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> '.html_safe + t("change_orders.new"), "/purchase_orders/#{@purchase_order.id.to_s}/clone", { :class => 'btn btn-warning' } if @purchase_order.valuations.size > 0 %>
+    <% end %>
+
+  </div>
+
+  <hr>
 <%= link_to t('actions.edit'), edit_purchase_order_path(@purchase_order) %> |
 <%= link_to t('actions.back'), purchase_orders_path %>

@@ -2,4 +2,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back', valuations_path %>
+<%= link_to t('actions.show'), @valuation %> |
+<% if @purchase_order.parent.nil? %>
+	<%= link_to t('actions.back'), purchase_order_valuations_path(@purchase_order) %>
+<% else %>
+	<%= link_to t('actions.back'), purchase_order_valuations_path(@purchase_order.parent) %>
+<% end %>

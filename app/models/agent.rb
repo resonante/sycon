@@ -4,4 +4,6 @@ class Agent < ActiveRecord::Base
 	belongs_to :customer
 
 	attr_accessor :password
+	validates :name, :email, :address, presence: true
+	validates :works, presence: true	
 end

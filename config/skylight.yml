@@ -1,3 +1,4 @@
 ---
 # The authentication token for the application.
 authentication: HCb8WWcOQxOCFqzpfLItIZP1MmbpKUNoMVAzUGaupZo
+alert_log_file: 'false'

@@ -26,6 +26,11 @@
     <%= f.text_area :description, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label t('fields.invoice') %><br>
+    <%= f.text_field :invoice, class: 'form-control' %>
+  </div>
+
   <h3 class="page-header"><%= t('.items') %></h3>
 
   <table class="table table-striped" id="items-table">
@@ -46,11 +51,13 @@
     <td><strong>Total Bs.</strong></td>
     <td><strong>%</strong></td>        
   </thead>
+    <% acum_total = 0 %>
+    <% actual_total = 0 %>
     <% @purchase_order_items.each_with_index do |purchase_order_item, index| %>
       <tr>
         <td width="7%"><%= index + 1 %></td>
         <td width="20%"><%= purchase_order_item.description %></td>
-        <td><%= number_to_currency(purchase_order_item.quantity, unit: '', separator: ",", delimiter: ".") %></td>
+        <td id="quantity-<%= index %>"><%= number_to_currency(purchase_order_item.quantity, unit: '', separator: ",", delimiter: ".") %></td>
         <td id="oc-<%= index %>"><%= number_to_currency(purchase_order_item.quantity * purchase_order_item.price, unit: '', separator: ",", delimiter: ".") %></td>
         
         <% if action_name == 'new' %>
@@ -58,15 +65,22 @@
         <td><%= number_to_currency(0, unit: '', separator: ",", delimiter: ".") %></td>        
         <% else %>
         <td><input data-index="<%= index %>" name="valuation[valuation_items[<%= purchase_order_item.id %>]]" value="<%= purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value %>" class="form-control calculate" /></td>
-        <td><%= number_to_currency((purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>        
+        <td><%= number_to_currency((purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+        <% acum_total += (purchase_order_item.valuation_items.where(valuation_id: @valuation.id).first.value * purchase_order_item.price) %>        
         <% end %>
-      
+
+        <% #acum1 = @purchase_order.parent_id.nil? ? 0 : PurchaseOrderItem.where("purchase_order_id = #{@purchase_order.parent_id} and item = #{purchase_order_item.item}").first.valuation_items.includes(:valuation).where('reference <= 2').sum(:value) %>
         <% if action_name == 'new' %>
-        <td id="acb-<%= index %>"><%= number_to_currency(purchase_order_item.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
-        <td><%= number_to_currency((purchase_order_item.valuation_items.sum(:value)) * purchase_order_item.price, unit: '', separator: ",", delimiter: ".") %></td>
+        <% vcount = @purchase_order.parent.nil? ? @purchase_order.valuations.count.to_s : @purchase_order.parent.valuations.count.to_s %>
+        <% p = @purchase_order.parent.nil? ? @purchase_order.id.to_s : @purchase_order.parent_id.to_s %>
+        <td id="aq-<%= index %>"><%= number_to_currency(PurchaseOrderItem.where("purchase_order_id = #{p} and item = #{purchase_order_item.item}").first.valuation_items.includes(:valuation).where('reference <= '+ vcount).sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
+        <td><%= number_to_currency((PurchaseOrderItem.where("purchase_order_id = #{p} and item = #{purchase_order_item.item}").first.valuation_items.includes(:valuation).where('reference <= '+vcount).sum(:value)) * purchase_order_item.price, unit: '', separator: ",", delimiter: ".") %></td>
+        <% actual_total += ((PurchaseOrderItem.where("purchase_order_id = #{p} and item = #{purchase_order_item.item}").first.valuation_items.includes(:valuation).where('reference <= '+vcount).sum(:value)) * purchase_order_item.price) %>
         <% else %>
-        <td id="acb-<%= index %>"><%= number_to_currency(purchase_order_item.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
-        <td><%= number_to_currency((purchase_order_item.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value)) * purchase_order_item.price, unit: '', separator: ",", delimiter: ".") %></td>
+        <% acum1 = @purchase_order.parent_id.nil? ? 0 : PurchaseOrderItem.where("purchase_order_id = #{@purchase_order.parent_id} and item = #{purchase_order_item.item}").first.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value) %>        
+        <td id="aq-<%= index %>"><%= number_to_currency(purchase_order_item.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value) + acum1, unit: '', separator: ",", delimiter: ".") %></td>
+        <td><%= number_to_currency((purchase_order_item.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value)) * purchase_order_item.price + (acum1 * purchase_order_item.price), unit: '', separator: ",", delimiter: ".") %></td>
+        <% actual_total += (purchase_order_item.valuation_items.includes(:valuation).where('reference <= '+@valuation.reference.to_s).sum(:value)) * purchase_order_item.price + (acum1 * purchase_order_item.price) %>
         <% end %>
     
         <% if action_name == 'new' %>
@@ -82,11 +96,11 @@
         <td></td>
         <td></td>
         <td><strong><%= number_to_currency(@purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
-        <td><strong><%= number_to_currency(@valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></td>
-        <td><strong><%= number_to_currency((@valuation.valuation_items.sum(:value) * 100) / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
-        <td><strong><%= number_to_currency(@acumulated_before, unit: '', separator: ",", delimiter: ".") %></strong></td>
-        <td><strong><%= number_to_currency(@acumulated_before * 100 / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
-        <td><strong><%= number_to_currency(@acumulated_before + @valuation.valuation_items.sum(:value), unit: '', separator: ",", delimiter: ".") %></strong></td>
+        <td></td>
+        <td><strong><%= number_to_currency(acum_total, unit: '', separator: ",", delimiter: ".") %></strong></td>
+        <td></td>
+        <td><strong><%= number_to_currency(actual_total, unit: '', separator: ",", delimiter: ".") %></strong></td>
+        <td><strong><%= number_to_currency(actual_total * 100 / @purchase_order.purchase_order_items.sum('quantity * price'), unit: '', separator: ",", delimiter: ".") %></strong></td>
       </tr>    
   </table>
 
@@ -101,6 +115,27 @@
   <div class="col-xs-8 col-md-6"></div>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cambio en Orden</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alrt-msg" class="alert alert-danger alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><strong>Alerta!</strong></div>
+        La Cantidad acumulada (<span id="introq"></span>) es superior a la establecida en el presupuesto (<span id="totalq"></span>). ¿Se generará una Orden de Cambio?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <%= link_to(t('change_orders.new'), '/purchase_orders/' + @purchase_order.id.to_s + '/clone', :class => 'btn btn-primary') %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%= javascript_tag do %>
   window.rest_value = <%= @rest_value || 0 %>;
 <% end %>

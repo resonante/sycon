@@ -3,14 +3,14 @@
 
 <%= form_for(@supplier) do |f| %>
   <% if @supplier.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
-
-      <ul>
-      <% @supplier.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong><%= pluralize(@supplier.errors.count, "error") %> prohibited this customer from being saved:</strong>
+        <ul>
+        <% @supplier.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>        
     </div>
   <% end %>
 

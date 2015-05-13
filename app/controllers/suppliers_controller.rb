@@ -27,7 +27,7 @@ class SuppliersController < ApplicationController
   # POST /suppliers.json
   def create
     @supplier = Supplier.new(supplier_params)
-
+    @works = Work.all
     respond_to do |format|
       if @supplier.save
         format.html { redirect_to @supplier, notice: t('suppliers.success_create') }
@@ -42,6 +42,7 @@ class SuppliersController < ApplicationController
   # PATCH/PUT /suppliers/1
   # PATCH/PUT /suppliers/1.json
   def update
+    @works = Work.all
     respond_to do |format|
       if @supplier.update(supplier_params)
         format.html { redirect_to @supplier, notice: t('suppliers.success_update') }
